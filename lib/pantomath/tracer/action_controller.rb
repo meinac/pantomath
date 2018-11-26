@@ -14,6 +14,7 @@ module Pantomath
       def trace_request
         start_span
         yield
+        set_status
       ensure
         close_span
       end
@@ -46,6 +47,14 @@ module Pantomath
 
         def active_scope
           Pantomath.tracer.scope_manager.active
+        end
+
+        def active_span
+          Pantomath.tracer.active_span
+        end
+
+        def set_status
+          active_span.set_tag("http.status", status)
         end
 
     end
