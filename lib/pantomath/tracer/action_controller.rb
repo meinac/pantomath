@@ -38,23 +38,15 @@ module Pantomath
         end
 
         def tracer_context
-          Pantomath.tracer.extract(OpenTracing::FORMAT_RACK, request.env)
+          Pantomath.extract(OpenTracing::FORMAT_RACK, request.env)
         end
 
         def close_span
-          active_scope.close if active_scope
-        end
-
-        def active_scope
-          Pantomath.tracer.scope_manager.active
-        end
-
-        def active_span
-          Pantomath.tracer.active_span
+          Pantomath.active_scope.close if Pantomath.active_scope
         end
 
         def set_status
-          active_span.set_tag("http.status", status)
+          Pantomath.active_span.set_tag("http.status", status)
         end
 
     end
