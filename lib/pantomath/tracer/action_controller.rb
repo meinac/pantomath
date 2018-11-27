@@ -26,9 +26,12 @@ module Pantomath
             child_of: tracer_context,
             tags: {
               "span.kind" => "web",
-              "http.url" => request.original_url,
-              "controller" => controller_name,
-              "action_name" => action_name,
+              "span.tracer" => "Pantomath::Tracer::ActionController",
+              "http.request.method" => request.method,
+              "http.request.url" => request.original_url,
+              "http.request.path" => request.path,
+              "action_controller.controller_name" => controller_name,
+              "action_controller.action_name" => action_name
             }
           )
         end
@@ -46,7 +49,7 @@ module Pantomath
         end
 
         def set_status
-          Pantomath.active_span.set_tag("http.status", status)
+          Pantomath.active_span.set_tag("http.response.status_code", status)
         end
 
     end
