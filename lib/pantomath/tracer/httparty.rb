@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# Just inlcude this file to enable this tracer.
 module Pantomath
   module Tracer
     module HTTParty
