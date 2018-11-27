@@ -4,11 +4,19 @@ module Pantomath
   module Tracer
     module Grape
 
-      def self.included(base)
-        base.send(:before, &:start_span)
-        base.send(:after, &:close_span)
+      def inherited(child)
+        super
+        define_tracer_callbacks(child)
+      end
 
-        base.send(:helpers) do
+      def define_tracer_callbacks(child)
+        return unless namespace_stackable(:tracer_callbacks_defined).blank?
+        namespace_stackable(:tracer_callbacks_defined, true)
+
+        child.send(:before, &:start_span)
+        child.send(:after, &:close_span)
+
+        child.send(:helpers) do
           def start_span
             Pantomath.tracer.start_active_span(
               span_name,
@@ -46,3 +54,5 @@ module Pantomath
     end
   end
 end
+
+Grape::API.singleton_class.send(:prepend, Pantomath::Tracer::Grape)
