@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-# Including this module into a contoller enables tracing for that controller.
-# If you want to enable the controller tracing for whole project, include this
-# module to ApplicationController.
 module Pantomath
   module Tracer
     module ActionController
@@ -55,3 +52,5 @@ module Pantomath
     end
   end
 end
+
+ActionController::Base.send(:include, Pantomath::Tracer::ActionController)
