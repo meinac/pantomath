@@ -46,7 +46,7 @@ module Pantomath
         end
 
         def set_status
-          Pantomath.active_span.set_tag("http.response.status_code", status)
+          Pantomath.active_span.set_tag("http.response.status_code", status) if Pantomath.active_span
         end
 
     end
