@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# Require this module to activate injecting trace_id by using HTTParty.
 module Pantomath
   module Extractor
     module HTTParty
