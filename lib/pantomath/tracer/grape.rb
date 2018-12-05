@@ -42,7 +42,7 @@ module Pantomath
           end
 
           def span_name
-            "#{request.env['REQUEST_METHOD']} #{request.url}"
+            "#{request.env['REQUEST_METHOD']} #{request.path}"
           end
 
           def tracer_context

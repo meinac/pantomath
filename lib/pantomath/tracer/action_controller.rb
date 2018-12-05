@@ -34,7 +34,7 @@ module Pantomath
         end
 
         def span_name
-          "#{request.method} #{request.original_url}"
+          "#{request.method} #{request.path}"
         end
 
         def tracer_context
