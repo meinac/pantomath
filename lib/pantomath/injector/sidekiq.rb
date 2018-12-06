@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Pantomath
-  module Extractor
+  module Injector
     class Sidekiq
       def call(worker_class, job, queue, redis_pool)
         inject_trace_id(job)
@@ -19,13 +19,13 @@ end
 
 Sidekiq.configure_client do |config|
   config.client_middleware do |chain|
-    chain.add Pantomath::Extractor::Sidekiq
+    chain.add Pantomath::Injector::Sidekiq
   end
 end
 
 Sidekiq.configure_server do |config|
   config.client_middleware do |chain|
-    chain.add Pantomath::Extractor::Sidekiq
+    chain.add Pantomath::Injector::Sidekiq
   end
 end
 

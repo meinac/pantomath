@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Pantomath
-  module Extractor
+  module Injector
     module HTTParty
       module Request
         def initialize(http_method, path, options = {})
@@ -21,4 +21,4 @@ module Pantomath
   end
 end
 
-HTTParty::Request.send(:prepend, Pantomath::Extractor::HTTParty::Request)
+HTTParty::Request.send(:prepend, Pantomath::Injector::HTTParty::Request)
