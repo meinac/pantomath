@@ -27,7 +27,7 @@ RSpec.describe Pantomath::Injector::HTTParty do
 
       before do
         stub_request(:get, "https://www.example.com/")
-          .with(headers: { 'Uber-Trace-Id'=>'1:2:3:4' })
+          .with(headers: { "Uber-Trace-Id" => "1:2:3:4" })
           .to_return(status: 200, body: "", headers: {})
 
         allow(Pantomath).to receive(:active_span).and_return(mock_span)
