@@ -27,8 +27,8 @@ module Pantomath
             Pantomath.extract(OpenTracing::FORMAT_RACK, context.request.env)
           end
 
-          def set_status
-            Pantomath.active_span.set_tag("http.response.status_code", context.status) if Pantomath.active_span
+          def status
+            ["http.response.status_code", context.status]
           end
 
       end

@@ -31,6 +31,8 @@ module Pantomath
         result = yield
         set_status
         result
+      rescue Exception => e
+        handle_exception(e)
       ensure
         close_span
       end
@@ -44,6 +46,10 @@ module Pantomath
           )
         end
 
+        def set_status
+          Pantomath.active_span.set_tag(*status) if status
+        end
+
         def span_name
           raise "Should be implemented"
         end
@@ -54,7 +60,9 @@ module Pantomath
 
         def tracer_context; end
 
-        def set_status; end
+        # Return an array of status tag key and status
+        # to set status of Span.
+        def status; end
 
         def close_span
           Pantomath.active_scope.close if Pantomath.active_scope
@@ -72,6 +80,16 @@ module Pantomath
 
         def tag_collector
           self.class.tag_collector
+        end
+
+        def handle_exception(exception)
+          Pantomath.active_span.set_tag(:error, true)
+          Pantomath.active_span.log_kv(
+            "event": "error",
+            "error.object": exception,
+            stack: exception.backtrace.take(10) # This is important because stacktrace can be too long which exceeds the maximum udp messages size
+          )
+          raise exception
         end
 
     end
