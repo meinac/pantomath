@@ -11,7 +11,7 @@ module Pantomath
 
         private
           def config_name
-            @config_name ||= group_name.gsub(/([a-z\d])([A-Z])/,"\1_\2").downcase
+            @config_name ||= group_name.gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
           end
 
           def group_name
