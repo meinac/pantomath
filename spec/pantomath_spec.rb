@@ -22,11 +22,15 @@ RSpec.describe Pantomath do
   describe "::tracer" do
     subject { described_class.tracer }
 
-    it { is_expected.to be_instance_of(Jaeger::Client::Tracer) }
+    it { is_expected.to be(TestTracer) }
   end
 
   describe "::active_scope" do
-    let(:scope_manager) { described_class.tracer.scope_manager }
+    let(:scope_manager) { double(:scope_manager) }
+
+    before do
+      allow(TestTracer).to receive(:scope_manager).and_return(scope_manager)
+    end
 
     subject { described_class.active_scope }
 

@@ -25,21 +25,21 @@ module Pantomath
   end
 
   def self.active_scope
-    Pantomath.tracer.scope_manager.active
+    tracer.scope_manager.active
   end
 
   def self.active_span
-    Pantomath.tracer.active_span
+    tracer.active_span
   end
 
   def self.extract(format, carrier)
-    Pantomath.tracer.extract(format, carrier)
+    tracer.extract(format, carrier)
   end
 
   def self.inject(format, carrier)
     return unless active_span
 
-    Pantomath.tracer.inject(active_span.context, format, carrier)
+    tracer.inject(active_span.context, format, carrier)
   end
 
 end

@@ -22,7 +22,7 @@ RSpec.describe Pantomath::Injector::HTTParty do
     end
 
     context "when there is an active span" do
-      let(:context) { double(:context, trace_id: 1, span_id: 2, parent_id: 3, flags: 4) }
+      let(:context) { double(:context) }
       let(:mock_span) { double(:span, context: context) }
 
       before do
@@ -30,7 +30,7 @@ RSpec.describe Pantomath::Injector::HTTParty do
           .with(headers: { "Uber-Trace-Id" => "1:2:3:4" })
           .to_return(status: 200, body: "", headers: {})
 
-        allow(Pantomath).to receive(:active_span).and_return(mock_span)
+        allow(TestTracer).to receive(:active_span).and_return(mock_span)
       end
 
       it "injects trace id into the headers of the http request" do

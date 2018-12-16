@@ -3,6 +3,7 @@
 module Pantomath
   module Injector
     module HTTParty
+
       def initialize(http_method, path, options = {})
         options[:headers] ||= {}
         inject_trace_id(options[:headers])
