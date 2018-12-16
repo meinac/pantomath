@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "pantomath/instrumentation/sidekiq/agent"
+require "pantomath/instrumentation/sidekiq/adapter"
 require "pantomath/instrumentation/sidekiq/tracer"
 
 Sidekiq.configure_server do |config|
