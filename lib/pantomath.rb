@@ -15,13 +15,17 @@ module Pantomath
   end
 
   def self.tracer
-    @tracer ||= begin
+    tracers[Process.pid] ||= begin
       Jaeger::Client.build(
         host: configuration.agent_host,
         port: configuration.agent_port,
         service_name: configuration.service_name
       )
     end
+  end
+
+  def self.tracers
+    @tracers ||= {}
   end
 
   def self.active_scope
