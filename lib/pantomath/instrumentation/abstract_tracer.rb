@@ -9,6 +9,10 @@ module Pantomath
           Pantomath.configuration.tag_collectors.send(config_name)
         end
 
+        def exclude_pattern
+          Pantomath.configuration.exclude_patterns.send(config_name)
+        end
+
         private
           def config_name
             @config_name ||= group_name.gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
@@ -26,18 +30,28 @@ module Pantomath
         @context = context
       end
 
-      def trace
-        start_span
-        result = yield
-        set_status
-        result
-      rescue Exception => e
-        handle_exception(e)
-      ensure
-        close_span
+      def trace(&block)
+        return yield if exclude?
+
+        track(&block)
       end
 
       private
+        def track
+          start_span
+          result = yield
+          set_status
+          result
+        rescue Exception => e
+          handle_exception(e)
+        ensure
+          close_span
+        end
+
+        def exclude?
+          exclude_pattern && span_name =~ exclude_pattern
+        end
+
         def start_span
           Pantomath.tracer.start_active_span(
             span_name,
@@ -76,6 +90,10 @@ module Pantomath
           return {} unless tag_collector
 
           tag_collector.is_a?(Proc) ? context.instance_exec(&tag_collector) : context.send(tag_collector)
+        end
+
+        def exclude_pattern
+          self.class.exclude_pattern
         end
 
         def tag_collector

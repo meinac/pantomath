@@ -9,5 +9,9 @@ module Pantomath
     def tag_collectors
       @tag_collectors ||= OpenStruct.new
     end
+
+    def exclude_patterns
+      @exclude_patterns ||= OpenStruct.new
+    end
   end
 end
