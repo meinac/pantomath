@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    pantomath (0.4.1)
+    pantomath (0.4.2)
       jaeger-client (~> 0.10.0)
 
 GEM
