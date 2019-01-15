@@ -15,7 +15,7 @@ module Pantomath
   end
 
   def self.tracer
-    Jaeger::Client.build(
+    @tracer ||= Jaeger::Client.build(
       host: configuration.agent_host,
       port: configuration.agent_port,
       service_name: configuration.service_name
