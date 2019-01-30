@@ -23,6 +23,10 @@ RSpec.describe Pantomath do
     subject { described_class.tracer }
 
     it { is_expected.to be(TestTracer) }
+
+    it "returns always the same tracer" do
+      expect(subject).to eql(described_class.tracer)
+    end
   end
 
   describe "::active_scope" do
