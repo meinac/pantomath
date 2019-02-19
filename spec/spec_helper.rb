@@ -1,6 +1,7 @@
 require "bundler/setup"
 require "pantomath"
 require "webmock/rspec"
+require "sidekiq/testing"
 
 Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each {|f| require f }
 
